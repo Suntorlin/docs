@@ -1,14 +1,14 @@
 ---
 title: "MCP Server"
-description: "Connect Claude, Cursor, or any MCP client to your Fish Audio account: search voices, generate speech, and transcribe audio"
+description: "Connect Claude, Cursor, or any MCP client to your Fish Audio account: search voices, generate speech, transcribe audio, and create images and videos"
 icon: "plug"
 ---
 
-The Fish Audio MCP server gives AI agents direct access to your Fish Audio account: they can browse the voice library, generate speech, and transcribe audio for you.
+The Fish Audio MCP server gives AI agents direct access to your Fish Audio account: they can browse the voice library, generate speech, transcribe audio, and generate or edit images and videos for you.
 
 - **Endpoint**: `https://api.fish.audio/mcp` (streamable HTTP)
-- **Authentication**: OAuth. Your MCP client opens a browser window and you sign in with your Fish Audio account.
-- **Billing**: usage draws from your plan's package credits, exactly like the [web app](https://fish.audio/app). It does not consume developer API credits.
+- **Authentication**: OAuth. Your MCP client opens a browser window, you sign in with your Fish Audio account, and choose the team the connection works in.
+- **Billing**: usage draws from your plan's package credits, exactly like the [web app](https://fish.audio/app). It does not consume developer API credits. Image and video generation is quoted first, and the agent asks you to confirm the price before it generates.
 
 ## Connect
 
@@ -86,13 +86,25 @@ Once connected, ask in plain language. The agent picks the right tools:
   <Card title="Check spend" icon="wallet">
     "How many Fish Audio credits do I have left?"
   </Card>
+
+  <Card title="Generate an image" icon="image">
+    "Create a 16:9 watercolor image of a lighthouse at dawn. Show me the price first, then generate it."
+  </Card>
+
+  <Card title="Edit or animate an image" icon="film">
+    "Upload portrait.png, replace the background with a warm sunset, then turn the result into a short video with a slow push-in."
+  </Card>
 </CardGroup>
 
-In coding agents like Claude Code and Codex, tools compose with the shell: the agent can download the generated audio URL with `curl`, upload local recordings for transcription, or batch-generate a directory of scripts.
+In coding agents like Claude Code and Codex, tools compose with the shell: the agent can download generated audio, images, and videos with `curl`, upload local recordings for transcription or reference images for editing, or batch-generate a directory of scripts.
 
 ## Good to know
 
 - Add audio tags in square brackets inside the text to control delivery: `[whispering]`, `[excited]`, `[laughing]`. Tags are performed, never spoken.
 - If no voice is specified, a curated default voice for the requested language is used.
-- Generated audio is returned as a permanent URL; failed generations are refunded.
 - Local files can be transcribed too. The agent uploads them to a temporary slot that is deleted automatically after 7 days.
+- Before an image or video is generated, the agent requests a credit estimate and asks you to confirm it. The server re-checks the price when the job is submitted and never charges more than the amount you approved.
+- Video generation needs a Plus plan or higher. Free plans have a daily image allowance and a smaller image count per request; the estimate reports these limits before you are asked to approve anything.
+- Reference images for editing or image-to-video are JPEG, PNG, or WebP files up to 20 MB. The agent uploads them for you, and an image it just generated can be reused as input without downloading it.
+- Generated audio, images, and videos are returned as permanent URLs; failed generations are refunded.
+- A connection is bound to the team you chose at sign-in. To work in another team, add the server again and choose that team.
