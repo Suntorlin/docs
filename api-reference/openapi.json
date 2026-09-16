@@ -8489,7 +8489,7 @@
                         }
                       ],
                       "default": null,
-                      "description": "Managed `twilio` numbers: whether a cold-transfer target sees the original caller's number (true) or this number (false). `null` for imported `sip` numbers, whose carrier owns the setting.",
+                      "description": "Managed `twilio` numbers: whether a transfer target, cold or warm, sees the original caller's number (true) or this number (false). `null` for imported `sip` numbers, whose carrier owns the setting.",
                       "title": "Cold Transfer Use Original Caller"
                     },
                     "cold_transfer_use_original_caller_effective": {
@@ -8502,7 +8502,7 @@
                         }
                       ],
                       "default": null,
-                      "description": "The policy the carrier has confirmed; `null` while unknown or for imported `sip` numbers.",
+                      "description": "The cold-transfer policy the carrier has confirmed; `null` while unknown or for imported `sip` numbers. Warm transfers follow `cold_transfer_use_original_caller` directly from the next call.",
                       "title": "Cold Transfer Use Original Caller Effective"
                     },
                     "caller_id_sync_status": {
@@ -9012,7 +9012,7 @@
                         }
                       ],
                       "default": null,
-                      "description": "Managed `twilio` numbers: whether a cold-transfer target sees the original caller's number (true) or this number (false). `null` for imported `sip` numbers, whose carrier owns the setting.",
+                      "description": "Managed `twilio` numbers: whether a transfer target, cold or warm, sees the original caller's number (true) or this number (false). `null` for imported `sip` numbers, whose carrier owns the setting.",
                       "title": "Cold Transfer Use Original Caller"
                     },
                     "cold_transfer_use_original_caller_effective": {
@@ -9025,7 +9025,7 @@
                         }
                       ],
                       "default": null,
-                      "description": "The policy the carrier has confirmed; `null` while unknown or for imported `sip` numbers.",
+                      "description": "The cold-transfer policy the carrier has confirmed; `null` while unknown or for imported `sip` numbers. Warm transfers follow `cold_transfer_use_original_caller` directly from the next call.",
                       "title": "Cold Transfer Use Original Caller Effective"
                     },
                     "caller_id_sync_status": {
@@ -9272,7 +9272,7 @@
       },
       "patch": {
         "summary": "Update Phone Number",
-        "description": "Change the label and/or repoint the number at another agent — the\ndeployment-pipeline move (rebind from the staging agent to the production\none). Send `agent_id: null` to unbind; unbound numbers ring busy. The\nagent must live in the number's workspace. Rebinding is a routing-table\nupdate resolved on the next inbound call; nothing about the number itself\nis reprovisioned.\n\nManaged `twilio` numbers also accept `cold_transfer_use_original_caller`,\nwhich picks the number a cold-transfer target sees, and\n`retry_caller_id_sync` to re-apply it after a failed synchronization; read\n`caller_id_sync_status` on the response. Imported `sip` numbers return 409\nfor either field because their carrier owns the setting.",
+        "description": "Change the label and/or repoint the number at another agent — the\ndeployment-pipeline move (rebind from the staging agent to the production\none). Send `agent_id: null` to unbind; unbound numbers ring busy. The\nagent must live in the number's workspace. Rebinding is a routing-table\nupdate resolved on the next inbound call; nothing about the number itself\nis reprovisioned.\n\nManaged `twilio` numbers also accept `cold_transfer_use_original_caller`,\nwhich picks the number a transfer target sees (cold and warm alike), and\n`retry_caller_id_sync` to re-apply it after a failed synchronization; read\n`caller_id_sync_status` on the response. Imported `sip` numbers return 409\nfor either field because their carrier owns the setting.",
         "security": [
           {
             "BearerAuth": []
@@ -9358,7 +9358,7 @@
                         }
                       ],
                       "default": null,
-                      "description": "Managed `twilio` numbers: whether a cold-transfer target sees the original caller's number (true) or this number (false). `null` for imported `sip` numbers, whose carrier owns the setting.",
+                      "description": "Managed `twilio` numbers: whether a transfer target, cold or warm, sees the original caller's number (true) or this number (false). `null` for imported `sip` numbers, whose carrier owns the setting.",
                       "title": "Cold Transfer Use Original Caller"
                     },
                     "cold_transfer_use_original_caller_effective": {
@@ -9371,7 +9371,7 @@
                         }
                       ],
                       "default": null,
-                      "description": "The policy the carrier has confirmed; `null` while unknown or for imported `sip` numbers.",
+                      "description": "The cold-transfer policy the carrier has confirmed; `null` while unknown or for imported `sip` numbers. Warm transfers follow `cold_transfer_use_original_caller` directly from the next call.",
                       "title": "Cold Transfer Use Original Caller Effective"
                     },
                     "caller_id_sync_status": {
@@ -15588,9 +15588,15 @@
             "default": "confirm",
             "enum": [
               "confirm",
+              "briefing",
               "direct"
             ],
             "title": "Warm Connect",
+            "type": "string"
+          },
+          "warm_briefing_instructions": {
+            "default": "",
+            "title": "Warm Briefing Instructions",
             "type": "string"
           }
         },
@@ -17175,9 +17181,15 @@
             "default": "confirm",
             "enum": [
               "confirm",
+              "briefing",
               "direct"
             ],
             "title": "Warm Connect",
+            "type": "string"
+          },
+          "warm_briefing_instructions": {
+            "default": "",
+            "title": "Warm Briefing Instructions",
             "type": "string"
           }
         },
@@ -18127,7 +18139,7 @@
               }
             ],
             "default": null,
-            "description": "Managed `twilio` numbers: whether a cold-transfer target sees the original caller's number (true) or this number (false). `null` for imported `sip` numbers, whose carrier owns the setting.",
+            "description": "Managed `twilio` numbers: whether a transfer target, cold or warm, sees the original caller's number (true) or this number (false). `null` for imported `sip` numbers, whose carrier owns the setting.",
             "title": "Cold Transfer Use Original Caller"
           },
           "cold_transfer_use_original_caller_effective": {
@@ -18140,7 +18152,7 @@
               }
             ],
             "default": null,
-            "description": "The policy the carrier has confirmed; `null` while unknown or for imported `sip` numbers.",
+            "description": "The cold-transfer policy the carrier has confirmed; `null` while unknown or for imported `sip` numbers. Warm transfers follow `cold_transfer_use_original_caller` directly from the next call.",
             "title": "Cold Transfer Use Original Caller Effective"
           },
           "caller_id_sync_status": {
@@ -18434,7 +18446,7 @@
               }
             ],
             "default": null,
-            "description": "Managed `twilio` numbers only: show the original caller's number on cold transfers (true) or this number (false). Takes effect for new calls once `caller_id_sync_status` is `synced`.",
+            "description": "Managed `twilio` numbers only: show the original caller's number on transfers, cold and warm (true), or this number (false). Warm transfers follow it from the next call; cold transfers once `caller_id_sync_status` is `synced`.",
             "title": "Cold Transfer Use Original Caller"
           },
           "retry_caller_id_sync": {
