@@ -4,6 +4,8 @@ description: "Connect Claude, Cursor, or any MCP client to your Fish Audio accou
 icon: "plug"
 ---
 
+import { PromptCard } from "/snippets/prompt-card.jsx";
+
 The Fish Audio MCP server gives AI agents direct access to your Fish Audio account: they can browse the voice library, generate speech, transcribe audio, and generate or edit images and videos for you.
 
 - **Endpoint**: `https://api.fish.audio/mcp` (streamable HTTP)
@@ -68,40 +70,57 @@ The Fish Audio MCP server gives AI agents direct access to your Fish Audio accou
 
 ## Try it
 
-Once connected, ask in plain language. The agent picks the right tools:
+Once connected, ask in plain language and the agent picks the right tools. Click a card to copy its prompt, then paste it into your agent.
 
 <CardGroup cols={2}>
-  <Card title="Narrate a script" icon="microphone">
-    "Find a calm English narration voice, read intro.md aloud, and give me the audio link."
-  </Card>
+  <PromptCard
+    title="Narrate a script"
+    icon="microphone"
+    prompt="Find a calm English narration voice, read intro.md aloud, and give me the audio link."
+  />
 
-  <Card title="Voice casting" icon="magnifying-glass">
-    "Show me the three most popular Japanese voices and play their samples."
-  </Card>
+  <PromptCard
+    title="Voice casting"
+    icon="magnifying-glass"
+    prompt="Show me the three most popular Japanese voices and play their samples."
+  />
 
-  <Card title="Transcribe a recording" icon="waveform">
-    "Transcribe meeting.mp3 and summarize the action items." (the agent uploads the file, then transcribes it)
-  </Card>
+  <PromptCard
+    title="Transcribe a recording"
+    icon="waveform"
+    prompt="Transcribe meeting.mp3 and summarize the action items."
+    note="(the agent uploads the file, then transcribes it)"
+  />
 
-  <Card title="Check spend" icon="wallet">
-    "How many Fish Audio credits do I have left?"
-  </Card>
+  <PromptCard
+    title="Check spend"
+    icon="wallet"
+    prompt="How many Fish Audio credits do I have left?"
+  />
 
-  <Card title="Generate an image" icon="image">
-    "Create a 16:9 watercolor image of a lighthouse at dawn. Show me the price first, then generate it."
-  </Card>
+  <PromptCard
+    title="Generate an image"
+    icon="image"
+    prompt="Create a 16:9 watercolor image of a lighthouse at dawn. Show me the price first, then generate it."
+  />
 
-  <Card title="Edit an image" icon="paintbrush">
-    "Upload portrait.png and replace the background with a warm sunset. Estimate first, then generate after I confirm."
-  </Card>
+  <PromptCard
+    title="Edit an image"
+    icon="paintbrush"
+    prompt="Upload portrait.png and replace the background with a warm sunset. Estimate first, then generate after I confirm."
+  />
 
-  <Card title="Generate a video" icon="video">
-    "Make a short 16:9 video of waves rolling onto a black-sand beach at sunset. Quote the credits, then generate."
-  </Card>
+  <PromptCard
+    title="Generate a video"
+    icon="video"
+    prompt="Make a short 16:9 video of waves rolling onto a black-sand beach at sunset. Quote the credits, then generate."
+  />
 
-  <Card title="Animate an image" icon="film">
-    "Turn the image you just generated into a short video with a slow push-in, and give me the video URL and what was charged."
-  </Card>
+  <PromptCard
+    title="Animate an image"
+    icon="film"
+    prompt="Turn the image you just generated into a short video with a slow push-in, and give me the video URL and what was charged."
+  />
 </CardGroup>
 
 In coding agents like Claude Code and Codex, tools compose with the shell: the agent can download generated audio, images, and videos with `curl`, upload local recordings for transcription or reference images for editing, or batch-generate a directory of scripts.
