@@ -31,6 +31,8 @@ img[src*="/images/"] {
 
 /* Clickable prompt cards (snippets/prompt-card.jsx) */
 .prompt-card {
+  /* The wrapper is the grid item; let the inner Card fill it so cards in a row stay equal height. */
+  display: grid;
   cursor: pointer;
   outline: none;
 }

@@ -8,6 +8,10 @@ export const PromptCard = ({ title, icon, prompt, note }) => {
 
   const hints = { idle: "Copy", copied: "Copied", failed: "Copy failed" };
 
+  // Appended to every copied prompt so an agent without the server can still act on it.
+  const setup =
+    "Use the Fish Audio MCP server for this (https://api.fish.audio/mcp, streamable HTTP with OAuth sign-in). If it is not connected yet, help me add it before you start.";
+
   const copyWithTextarea = text => {
     const area = document.createElement("textarea");
     area.value = text;
@@ -31,7 +35,7 @@ export const PromptCard = ({ title, icon, prompt, note }) => {
 
   const copy = async () => {
     try {
-      await writeClipboard(prompt);
+      await writeClipboard(`${prompt}\n\n${setup}`);
       setState("copied");
     } catch {
       setState("failed");
